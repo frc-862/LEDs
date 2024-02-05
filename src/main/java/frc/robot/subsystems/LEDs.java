@@ -114,7 +114,7 @@ public class LEDs extends SubsystemBase {
 			if (((i + (int)(Timer.getFPGATimestamp() * 10)) / segmentSize) % 2 == 0) {
 				ledBuffer.setHSV(i, LEDsConstants.BLUE_HUE, 255, 255);
 			} else {
-				ledBuffer.setHSV(i, LEDsConstants.BLUE_HUE, 255, 255);
+				ledBuffer.setHSV(i, LEDsConstants.ORANGE_HUE, 255, 255);
 			}
 		}
 	}

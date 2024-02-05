@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.LEDsConstants.LED_STATES;
 import frc.robot.subsystems.LEDs;
 
@@ -44,6 +45,6 @@ public class SetLEDState extends Command {
 
     @Override
     public boolean isFinished() {
-        return ((length != -1 && Timer.getFPGATimestamp() - startTime > length) || (command != null && command.isFinished())); 
+        return ((length != -1 && Timer.getFPGATimestamp() - startTime > length) || (command != null && !CommandScheduler.getInstance().isScheduled(command))); 
     }
 }
