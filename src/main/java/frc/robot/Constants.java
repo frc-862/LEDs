@@ -15,8 +15,19 @@ package frc.robot;
 public final class Constants {
   public class LEDsConstants {
         public static final int LED_PWM_PORT = 0;
-        public static final int LED_BUFFER_TIME = 12;
+        public static final int LED_LENGTH = 12;
+        public static final int LED_BUFFER_TIME = 60;
+
+        public static final int SWRIL_SEGMENT_SIZE = 5;
         
+        public static final int RED_HUE = 0;
+        public static final int ORANGE_HUE = 5;
+        public static final int YELLOW_HUE = 15;
+        public static final int GREEN_HUE = 240;
+        public static final int BLUE_HUE = 90;
+        public static final int PURPLE_HUE = 315;
+        public static final int PINK_HUE = 355;
+
         public enum LED_STATES{
             DISABLED(-1),
             MIXER(1),
