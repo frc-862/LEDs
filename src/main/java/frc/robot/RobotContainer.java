@@ -4,15 +4,23 @@
 
 package frc.robot;
 
-public class RobotContainer {
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.SetLEDState;
+import frc.robot.Constants.LEDsConstants.LED_STATES;
+import frc.robot.subsystems.LEDs;
 
+public class RobotContainer {
+  XboxController driver = new XboxController(0);
+  LEDs leds = new LEDs();
   public RobotContainer() {
     
     configureBindings();
   }
 
   private void configureBindings() {
-    
+    new Trigger(driver::getAButton).whileTrue(new ExampleCommand(leds));
   }
 
 }
