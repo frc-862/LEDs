@@ -7,6 +7,8 @@ import java.util.Map;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LEDsConstants;
 import frc.robot.Constants.LEDsConstants.LED_STATES;
@@ -100,6 +102,14 @@ public class LEDs extends SubsystemBase {
 		leds.setData(ledBuffer);
 	}
 
+	public Command EnableState(LED_STATES state) {
+		return new StartEndCommand(() -> {
+			ledStates.put(state, true);}, 
+			() -> {
+			ledStates.put(state, false);
+			}).ignoringDisable(true);
+	}
+
 	public void rainbow() {
 		for (int i = 0; i < LEDsConstants.LED_LENGTH; i++) {
 			ledBuffer.setHSV(i, (i + (int)(Timer.getFPGATimestamp() * 20)) % ledBuffer.getLength() * 180 / 14, 255, 100);
@@ -135,10 +145,6 @@ public class LEDs extends SubsystemBase {
 	 */
 	public void pulse(int hue) {
 		setSolidHSV(hue, 255, (int) Math.abs((Math.sin(Timer.getFPGATimestamp() * 2) * 255)));
-	}
-	
-	public void setState(LED_STATES state, boolean value) {
-		ledStates.put(state, value);
 	}
 
 	public void setSolidHSV(int h, int s, int v) {

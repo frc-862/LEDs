@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.SetLEDState;
 import frc.robot.Constants.LEDsConstants.LED_STATES;
 import frc.robot.subsystems.LEDs;
 
@@ -20,7 +19,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    new Trigger(driver::getAButton).whileTrue(new ExampleCommand(leds));
+    new Trigger(driver::getAButton).whileTrue(new ExampleCommand().deadlineWith(leds.EnableState(LED_STATES.SHOOTING)).andThen(leds.EnableState(LED_STATES.SHOT).withTimeout(2)));
   }
 
 }
