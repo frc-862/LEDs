@@ -12,13 +12,17 @@ public class ExampleCommand extends Command {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("Exapmle Command");
+  }
 
   @Override
   public void execute() {}
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Example Command Ended");
+  }
 
   @Override
   public boolean isFinished() {

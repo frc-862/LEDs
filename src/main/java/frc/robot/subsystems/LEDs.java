@@ -104,8 +104,10 @@ public class LEDs extends SubsystemBase {
 
 	public Command EnableState(LED_STATES state) {
 		return new StartEndCommand(() -> {
+			System.out.println("start");
 			ledStates.put(state, true);}, 
 			() -> {
+			System.out.println("end");
 			ledStates.put(state, false);
 			}).ignoringDisable(true);
 	}
