@@ -19,7 +19,6 @@ public class LEDs extends SubsystemBase {
 	private LED_STATES state = LED_STATES.OFF;
 	private Map<LED_STATES, Boolean> ledStates;
 
-	/** Creates a new  */
 	public LEDs() {
 		leds = new AddressableLED(LEDsConstants.LED_PWM_PORT);
 		ledBuffer = new AddressableLEDBuffer(LEDsConstants.LED_LENGTH);
@@ -41,10 +40,6 @@ public class LEDs extends SubsystemBase {
 		}
 
 		switch (state) {
-			case HAS_POSE:
-				rainbow();
-				break;
-
             case COLLECTED:
 				pulse(LEDsConstants.GREEN_HUE);
 				break;
@@ -53,35 +48,27 @@ public class LEDs extends SubsystemBase {
 				pulse(LEDsConstants.GREEN_HUE);
 				break;
 
-            case FINISHED_CLIMB:
+            case FINISHED_CLIMB: 
 				pulse(LEDsConstants.GREEN_HUE);
 				break;
 
-            case SHOOTING:
-				blink(LEDsConstants.YELLOW_HUE);
+            case SHOOTING: 
+				rainbow();
 				break;
 
-            case CHASING:
+            case CHASING: 
 				blink(LEDsConstants.RED_HUE);
 				break;
 
-            case READYING_SHOOT:
-				pulse(LEDsConstants.YELLOW_HUE);
+			case CLIMBING:
+				blink(LEDsConstants.PURPLE_HUE);
 				break;
 
-            case CLIMBED:
-				setSolidHSV(LEDsConstants.PURPLE_HUE, 255, 255);
-				break;
-
-            case CAN_SHOOT:
-				setSolidHSV(LEDsConstants.YELLOW_HUE, 255, 255);
-				break;
-
-            case HAS_PIECE:
+            case HAS_PIECE: 
 			    setSolidHSV(LEDsConstants.ORANGE_HUE, 255, 255);
 				break;
 
-            case HAS_VISION:
+            case HAS_VISION: 
 				setSolidHSV(LEDsConstants.PINK_HUE, 255, 255);
 				break;
 
@@ -102,7 +89,7 @@ public class LEDs extends SubsystemBase {
 		leds.setData(ledBuffer);
 	}
 
-	public Command EnableState(LED_STATES state) {
+	public Command enableState(LED_STATES state) {
 		return new StartEndCommand(() -> {
 			System.out.println("start");
 			ledStates.put(state, true);}, 

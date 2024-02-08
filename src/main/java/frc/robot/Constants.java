@@ -29,20 +29,17 @@ public final class Constants {
         public static final int PINK_HUE = 355;
 
         public enum LED_STATES{
-            DISABLED(-1),
+            DISABLED(0),
             MIXER(1),
-            HAS_POSE(2), 
-            COLLECTED(3), 
-            SHOT(4), 
-            FINISHED_CLIMB(5), 
-            SHOOTING(6), 
-            CHASING(7), 
-            READYING_SHOOT(8), 
-            CLIMBED(9), 
-            CAN_SHOOT(10), 
-            HAS_PIECE(11), 
-            HAS_VISION(12),
-            OFF(13);
+            COLLECTED(2), 
+            SHOT(3), 
+            FINISHED_CLIMB(4), 
+            SHOOTING(5), 
+            CHASING(6), 
+            CLIMBING(7),
+            HAS_PIECE(8), 
+            HAS_VISION(9),
+            OFF(10);
 
             private final int priority;
             LED_STATES(int priority) {
