@@ -7,6 +7,8 @@ import java.util.Map;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LEDsConstants;
 import frc.robot.Constants.LEDsConstants.LED_STATES;
@@ -17,7 +19,6 @@ public class LEDs extends SubsystemBase {
 	private LED_STATES state = LED_STATES.OFF;
 	private Map<LED_STATES, Boolean> ledStates;
 
-	/** Creates a new  */
 	public LEDs() {
 		leds = new AddressableLED(LEDsConstants.LED_PWM_PORT);
 		ledBuffer = new AddressableLEDBuffer(LEDsConstants.LED_LENGTH);
@@ -39,10 +40,6 @@ public class LEDs extends SubsystemBase {
 		}
 
 		switch (state) {
-			case HAS_POSE:
-				rainbow();
-				break;
-
             case COLLECTED:
 				pulse(LEDsConstants.GREEN_HUE);
 				break;
@@ -51,35 +48,27 @@ public class LEDs extends SubsystemBase {
 				pulse(LEDsConstants.GREEN_HUE);
 				break;
 
-            case FINISHED_CLIMB:
+            case FINISHED_CLIMB: 
 				pulse(LEDsConstants.GREEN_HUE);
 				break;
 
-            case SHOOTING:
-				blink(LEDsConstants.YELLOW_HUE);
+            case SHOOTING: 
+				rainbow();
 				break;
 
-            case CHASING:
+            case CHASING: 
 				blink(LEDsConstants.RED_HUE);
 				break;
 
-            case READYING_SHOOT:
-				pulse(LEDsConstants.YELLOW_HUE);
+			case CLIMBING:
+				blink(LEDsConstants.PURPLE_HUE);
 				break;
 
-            case CLIMBED:
-				setSolidHSV(LEDsConstants.PURPLE_HUE, 255, 255);
-				break;
-
-            case CAN_SHOOT:
-				setSolidHSV(LEDsConstants.YELLOW_HUE, 255, 255);
-				break;
-
-            case HAS_PIECE:
+            case HAS_PIECE: 
 			    setSolidHSV(LEDsConstants.ORANGE_HUE, 255, 255);
 				break;
 
-            case HAS_VISION:
+            case HAS_VISION: 
 				setSolidHSV(LEDsConstants.PINK_HUE, 255, 255);
 				break;
 
@@ -98,6 +87,16 @@ public class LEDs extends SubsystemBase {
 		}
 
 		leds.setData(ledBuffer);
+	}
+
+	public Command enableState(LED_STATES state) {
+		return new StartEndCommand(() -> {
+			System.out.println("start");
+			ledStates.put(state, true);}, 
+			() -> {
+			System.out.println("end");
+			ledStates.put(state, false);
+			}).ignoringDisable(true);
 	}
 
 	public void rainbow() {
@@ -135,10 +134,6 @@ public class LEDs extends SubsystemBase {
 	 */
 	public void pulse(int hue) {
 		setSolidHSV(hue, 255, (int) Math.abs((Math.sin(Timer.getFPGATimestamp() * 2) * 255)));
-	}
-	
-	public void setState(LED_STATES state, boolean value) {
-		ledStates.put(state, value);
 	}
 
 	public void setSolidHSV(int h, int s, int v) {
